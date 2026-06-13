@@ -1,0 +1,21 @@
+-r requirements.txt
+
+print-dict
+
+coverage
+pytest
+pytest-cov
+
+mypy
+mypy-extensions
+typing_extensions
+
+pyflakes
+pylint
+black
+
+flake8
+importchecker
+autopep8
+
+icecream

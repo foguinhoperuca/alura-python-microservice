@@ -1,0 +1,11 @@
+python-dotenv
+termcolor
+requests
+
+validate-docbr
+
+fastapi
+uvicorn
+
+# python-testes-com-dubles
+httmock

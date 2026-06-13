@@ -1,0 +1,15 @@
+{
+  "amount": 1000.01,
+  "currency": "BRL",
+  "paymentMethod": {
+    "type": "credit_card",
+    "cardNumber": "411110000111111",
+    "expiryDate": "12/25",
+    "cvv": "123"
+  },
+  "customer": {
+    "id": "cust_001",
+    "name": "John Doe",
+    "email": "teste@teste.com.br"
+  }
+}

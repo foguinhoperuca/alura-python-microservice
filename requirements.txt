@@ -1,11 +1,12 @@
-python-dotenv
-termcolor
-requests
-
-validate-docbr
-
 fastapi
 uvicorn
+httpx
+asyncpg
+alembic
+sqlalchemy
+greenlet
+python-dotenv
 
-# python-testes-com-dubles
-httmock
+termcolor
+requests
+validate-docbr

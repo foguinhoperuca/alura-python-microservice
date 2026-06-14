@@ -30,8 +30,15 @@ emergency() {
 post_json() {
 	URL="$1"
 	FILENAME="$2"
-	echo "${URL} :: ${FILENAME}"
+	DEBUG=${DEBUG:-0}
+	if [[ "${DEBUG}" == "1" ]]; then
+		echo "${URL} :: ${FILENAME}"
+	fi
 	curl -X POST $URL -H "Content-Type: application/json" -H "Accept: application/json" -d $FILENAME
+}
+
+health_check() {
+	curl -i -H "Content-Type: application/json" -H "Accept: application/json" -X GET "http://localhost:8000/health_check"
 }
 
 auth() {
@@ -58,28 +65,31 @@ auth() {
     curl -i -X GET $URL -H "$AUTH_HEADER"
 }
 
-BASE_ENDPOINT="https://localhost"
+# BASE_ENDPOINT="https://localhost"
+BASE_ENDPOINT="http://eth0.kuna-mashiro.msr-c012.jeffersoncampos.eti.br"
 URL_PORT="8080"
 URL_PATH="api"
 case $1 in
     "emergency") emergency $2;;
+	"health_check")
+		clear
+		health_check
+		echo ""
+		date
+		;;
     "inventory")
-		BASE_ENDPOINT="http://localhost"
-		PORT="8082"
+		URL_PORT="8082"
 		URL_PATH="inventory/deduct"
 		post_json "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/inventory/deduct.json";;
 	"order")
-		BASE_ENDPOINT="http://localhost"
-		PORT="8083"
+		URL_PORT="8083"
 		URL_PATH="orders"
 		post_json "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/order/orders.json"
 		;;
 	"payment")
-		BASE_ENDPOINT="http://localhost"
-		PORT="8081"
+		URL_PORT="8081"
 		URL_PATH="payments/process"
-		URL_POST="${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}"
-		post_json "${URL_POST}" "tests/fixtures/payment/process.json"
+		post_json "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/payment/process.json"
 		;;
     "auth") auth $3;;
     *)

@@ -19,3 +19,6 @@ importchecker
 autopep8
 
 icecream
+
+# python-testes-com-dubles
+httmock

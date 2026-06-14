@@ -1,5 +1,8 @@
 .PHONY: check-source
 
+# MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+# include $(MAKEFILE_DIR)training_py/Makefile
+
 check-source:
 	clear
 	flake8 best_practices_pep8/main.py best_practices_pep8/queue.py best_practices_pep8/stats.py best_practices_pep8/util.py
@@ -29,15 +32,20 @@ pyoov3-run-fastapi:
 	uvicorn app:app --reload
 	@date
 
-solid02-poetry:
-	curl -sSL https://install.python-poetry.org | python3 -
-	poetry --version
-	poetry install
-	poetry shell
+TARGET ?= "inventory"
+commerce-api:
+	@clear
+	@date
+	./mount_etna.sh $(TARGET) | jq
 
-# TODO migrate all file to use this aproach
-MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+inventory-commerce: TARGET="inventory"
+inventory-commerce: commerce-api
+	@date
 
-include $(MAKEFILE_DIR)python_testes_com_dubles/Makefile
-include $(MAKEFILE_DIR)training_py/Makefile
+order-commerce: TARGET="order"
+order-commerce: commerce-api
+	@date
 
+payment-commerce: TARGET="payment"
+payment-commerce: commerce-api
+	@date

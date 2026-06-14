@@ -220,3 +220,6 @@ __marimo__/
 # Custom
 *~*
 *#*
+*.swp
+*.swa
+

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from checkout.checkout_process import checkout_process
+from app.checkout.checkout_process import checkout_process
 
 
 router: APIRouter = APIRouter(prefix='/checkout', tags=['Checkout'])

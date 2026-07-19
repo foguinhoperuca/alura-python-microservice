@@ -28,7 +28,7 @@ class Util:
         '[%(filename)s:%(lineno)d]', 'white', attrs=['bold', 'dark']) + colored(
         '[%(levelname)s]', 'magenta', attrs=['bold', 'dark']) + ' %(message)s'
     LOG_FORMAT_SIMPLE = colored('[%(levelname)s]', 'magenta', attrs=['bold', 'dark']) + ' %(message)s'
-    DEFAULT_LOGGER_NAME = 'geconbot'
+    DEFAULT_LOGGER_NAME = 'uvicorn.info'
     DATETIME_FORMAT = "%Y-%m-%dT%H-%M-%S"
     # TODO use default lib to convert month into number
     MONTHS_DICT = {

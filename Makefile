@@ -12,24 +12,36 @@ run-pep8: check-source
 	clear
 	python best_practices_pep8/main.py
 
-run-test-tdd:
+test-tdd:
 	@clear
 	@date
 	python3 -m pytest tests/tdd_com_python/bidder.py::TestBid::test_bidder_should_generate_valid_bids
 	python3 -m unittest tests.tdd_com_python.domain.TestAuction.test_receive_bid_greater_than_last_one
 	@date
 
-run-test-tdd-all:
+test-tdd-all:
 	@clear
 	@date
 	python3 -m unittest tests.tdd_com_python.domain
 	python3 -m pytest tests/tdd_com_python/bidder.py
 	@date
 
-pyoov3-run-fastapi:
+run-uvicorn:
 	@clear
 	@date
-	uvicorn app:app --reload
+	uvicorn app.main:app --log-level info --host 0.0.0.0 --port 8085 --reload
+	@date
+
+run-uv:
+	@clear
+	@date
+	uv run uvicorn app.main:app --log-level info --host 0.0.0.0 --port 8085 --reload
+	@date
+
+run-python:
+	@clear
+	@date
+	python3 -m app.main --log-level NORMAL --debug normal
 	@date
 
 TARGET ?= "inventory"

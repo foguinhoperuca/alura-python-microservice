@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class PaymentMethodRequest(BaseModel):
-    pay_type: str             # FIXME original code was type only - classh with reserved word
+    pay_type: str             # FIXME original code was type only - clash with reserved word
     card_number: str
     card_expiry: str
     card_cvv: str

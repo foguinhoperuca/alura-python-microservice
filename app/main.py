@@ -3,17 +3,11 @@ import logging
 import os
 import sys
 
-from dotenv import load_dotenv
 from fastapi import FastAPI
 
 from app.checkout.router import router as checkout_router
 from app.util import Util, DebugBot
 
-
-# env_path = find_dotenv()
-# dotenv_values(env_path)
-env_path = os.path.join(os.path.dirname(__file__), '../.env')
-load_dotenv(env_path)
 
 app = FastAPI(title='Checkout Commercer', version='0.1.0')
 app.include_router(checkout_router)
@@ -28,6 +22,7 @@ async def health_check():
     inventory_url: str = os.getenv("URL_SERVICE_INVENTORY")
     host_app: str = os.getenv("APP_HOST")
     port_app: str = os.getenv("APP_PORT")
+    DATABASE_URL: str = os.getenv("DATABASE_URL")
     response: dict = {
         "status": "ok",
         "payment_url": payment_url,

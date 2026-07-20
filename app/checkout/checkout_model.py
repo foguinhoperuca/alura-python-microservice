@@ -3,6 +3,8 @@ from enum import auto, Enum
 
 from sqlalchemy import Column, DateTime, Float, Integer, String
 
+from app.infra.database import Base
+
 
 class CheckoutStatus(Enum):
     PENDING = auto()
@@ -13,7 +15,7 @@ class CheckoutStatus(Enum):
     FAILED = auto()
 
 
-class CheckoutModel:
+class CheckoutModel(Base):
     __tablename__ = 'checkouts'
 
     id = Column(Integer, primary_key=True, autoincrement=True)

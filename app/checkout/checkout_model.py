@@ -15,7 +15,7 @@ class CheckoutStatus(Enum):
     FAILED = auto()
 
 
-class CheckoutModel(Base):
+class Checkout(Base):
     __tablename__ = 'checkouts'
 
     id = Column(Integer, primary_key=True, autoincrement=True)

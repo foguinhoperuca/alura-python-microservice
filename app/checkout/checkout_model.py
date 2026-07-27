@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import auto, Enum
 
 from sqlalchemy import Column, DateTime, Float, Integer, String
@@ -22,8 +22,8 @@ class Checkout(Base):
     payment_id = Column(String(64), nullable=True)
     order_id = Column(String(64), nullable=True)
     customer_email = Column(String(128), nullable=False)
-    created_at = Column(DateTime, default=datetime.timezone.utc, nullable=False)
-    updated_at = Column(DateTime, default=datetime.timezone.utc, nullable=True)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(DateTime, default=datetime.now(timezone.utc), nullable=True)
     status = Column(String(24), default=CheckoutStatus.PENDING.value, nullable=False)
     error = Column(String, nullable=True)
     total_amount = Column(Float, nullable=False)

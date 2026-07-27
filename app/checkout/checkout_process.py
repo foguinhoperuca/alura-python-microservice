@@ -15,3 +15,5 @@ async def checkout_process(checkout_request: CheckoutRequest, db: AsyncSession =
     db.add(checkout)
     await db.commit()
     await db.refresh(checkout)
+
+    return checkout

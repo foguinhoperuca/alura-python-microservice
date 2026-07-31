@@ -4,12 +4,20 @@ import os
 import sys
 
 from fastapi import FastAPI
+from fastapi.concurrency import asynccontextmanager
 
 from app.checkout.router import router as checkout_router
+from app.infra.database import create_tables
 from app.util import Util, DebugBot
 
 
-app = FastAPI(title='Checkout Commercer', version='0.1.0')
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_tables()
+    yield
+
+
+app = FastAPI(title='Checkout Commercer', version='0.1.0', lifespan=lifespan)
 app.include_router(checkout_router)
 
 uvilogger = logging.getLogger('uvicorn.info')
@@ -30,6 +38,7 @@ async def health_check():
         "inventory_url": inventory_url,
         "host_app": host_app,
         "port_app": port_app,
+        "DATABASE_URL": DATABASE_URL,
     }
     print(f'Got dict values: {response}')
     uvilogger.info(f'Logging some response: {response}')

@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: checkout-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: checkout_db
+    ports:
+      - "5442:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healtcheck:
+      test: ["CMD-SHELL", "pg_isready -Ucheckout_user -d checkout_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   payment-service:
     image: wiremock/wiremock:latest
     container_name: payment-service-mock

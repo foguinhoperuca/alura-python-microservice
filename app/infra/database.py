@@ -15,3 +15,10 @@ async def get_db():
             yield session
         finally:
             await session.close()
+
+
+async def create_tables():
+    from app.checkout.checkout_model import (Checkout,)  # noqa: F401 - import used to register model with Base
+
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)

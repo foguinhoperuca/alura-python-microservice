@@ -70,12 +70,17 @@ BASE_ENDPOINT="http://localhost"
 URL_PORT="8080"
 URL_PATH="api"
 case $1 in
-    "emergency") emergency $2;;
+	"auth") auth $3;;
 	"health_check")
 		clear
 		health_check
 		echo ""
 		date
+		;;
+	"payment")
+		URL_PORT="8081"
+		URL_PATH="payments/process"
+		post_json_by_file "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/payment/process.json"
 		;;
     "inventory")
 		URL_PORT="8082"
@@ -86,13 +91,12 @@ case $1 in
 		URL_PATH="orders"
 		post_json_by_file "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/order/orders.json"
 		;;
-	"payment")
-		URL_PORT="8081"
-		URL_PATH="payments/process"
-		post_json_by_file "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/payment/process.json"
-		;;
-    "auth") auth $3;;
 	"checkout")
+		URL_PORT="8085"
+		URL_PATH="checkout/process"
+		post_json_by_file "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" "tests/fixtures/order/orders.json"
+		;;
+	"checkout_vars")
 		URL_PORT="8080"
 		URL_PATH="checkout/process"
 		post_json_by_vars "${BASE_ENDPOINT}:${URL_PORT}/${URL_PATH}" ""

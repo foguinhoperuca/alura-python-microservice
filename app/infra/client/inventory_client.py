@@ -8,7 +8,7 @@ from app.checkout.checkout_request import ItemRequest
 
 class InventoryClient:
     def __init__(self: Self) -> None:
-        self.inventory_service_url: str = os.getenv('INVENTORY_SERVICE_URL')
+        self.inventory_service_url: str = os.getenv('URL_SERVICE_INVENTORY')
         self.client = httpx.AsyncClient(base_url=self.inventory_service_url)
 
     async def deduct(self: Self, items: List[ItemRequest]) -> Dict[str, Any]:

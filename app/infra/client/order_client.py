@@ -8,7 +8,7 @@ from app.checkout.checkout_request import ItemRequest, ShippingAddressRequest
 
 class OrderClient:
     def __init__(self: Self) -> None:
-        self.order_service_url: str = os.getenv('ORDER_SERVICE_URL')
+        self.order_service_url: str = os.getenv('URL_SERVICE_ORDER')
         self.client = httpx.AsyncClient(base_url=self.order_service_url)
 
     async def create(self: Self, checkout_id: str, customer_email: str, shipping_address: ShippingAddressRequest, items: List[ItemRequest]):
@@ -26,7 +26,7 @@ class OrderClient:
         }
         response = await self.client.post('/orders', json=payload)
         response.raise_for_status()
-        transaction_id = response.json().get('order_id')
+        transaction_id = response.json()['orderId']
 
         return {"order_id": transaction_id, "error": None}
 

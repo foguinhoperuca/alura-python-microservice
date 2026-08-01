@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healtcheck:
-      test: ["CMD-SHELL", "pg_isready -Ucheckout_user -d checkout_db"]
+      test: ["CMD-SHELL", "pg_isready -U checkout_user -d checkout_db"]
       interval: 10s
       timeout: 5s
       retries: 5

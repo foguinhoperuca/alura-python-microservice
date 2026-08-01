@@ -8,7 +8,7 @@ from app.checkout.checkout_request import PaymentMethodRequest
 
 class PaymentClient:
     def __init__(self: Self) -> None:
-        self.payment_service_url: str = os.getenv('PAYMENT_SERVICE_URL')
+        self.payment_service_url: str = os.getenv('URL_SERVICE_PAYMENT')
         self.client = httpx.AsyncClient(base_url=self.payment_service_url)
 
     async def process(self: Self, total_amount: float, payment_method: PaymentMethodRequest, customer_email: str) -> Dict[str, Any]:
@@ -24,7 +24,7 @@ class PaymentClient:
         }
         response = await self.client.post('payments/process', json=payload)
         response.raise_for_status()
-        transaction_id = response.json().get('transaction_id')
+        transaction_id = response.json()['transactionId']
 
         return {'transaction_id': transaction_id, 'error': None}
 

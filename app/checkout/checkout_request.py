@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 
 
@@ -17,7 +19,7 @@ class ShippingAddressRequest(BaseModel):
 
 
 class ItemRequest(BaseModel):
-    prodcut_id: str
+    product_id: str
     quantity: int
     price: float
 
@@ -25,5 +27,5 @@ class ItemRequest(BaseModel):
 class CheckoutRequest(BaseModel):
     payment_method: PaymentMethodRequest
     shipping_address: ShippingAddressRequest
-    items: ItemRequest
+    items: List[ItemRequest]
     customer_email: str

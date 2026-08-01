@@ -1,0 +1,13 @@
+{
+  "checkoutId": "chk_001",
+  "items": [
+    {
+      "productId": "prod_001",
+      "quantity": 2
+    },
+    {
+      "productId": "prod_002",
+      "quantity": 1
+    }
+  ]
+} 

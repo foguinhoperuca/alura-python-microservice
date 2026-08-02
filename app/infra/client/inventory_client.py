@@ -8,7 +8,7 @@ from app.client_manager import client_manager_factory
 
 class InventoryClient:
     def __init__(self: Self, client: httpx.AsyncClient) -> None:
-        self.client = client
+        self.client: httpx.AsyncClient = client
 
     async def deduct(self: Self, items: List[ItemRequest]) -> Dict[str, Any]:
         try:

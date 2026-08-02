@@ -8,7 +8,7 @@ from app.client_manager import client_manager_factory
 
 class OrderClient:
     def __init__(self: Self, client: httpx.AsyncClient) -> None:
-        self.client = client
+        self.client: httpx.AsyncClient = client
 
     async def create(self: Self, checkout_id: str, customer_email: str, shipping_address: ShippingAddressRequest, items: List[ItemRequest]):
         try:

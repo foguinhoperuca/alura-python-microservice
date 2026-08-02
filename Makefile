@@ -3,6 +3,15 @@
 # MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 # include $(MAKEFILE_DIR)training_py/Makefile
 
+patch:
+	clear
+	date
+	ssh jefferson@eth0.matsumoto-rangiku.msr-c012 "cd /home/jefferson/universal/projects/alura/python/microservice/; git restore .; git clean -fd"
+	git diff HEAD . > nami.patch
+	scp nami.patch jefferson@eth0.matsumoto-rangiku.msr-c012:/home/jefferson/universal/projects/alura/python/microservice/
+	ssh jefferson@eth0.matsumoto-rangiku.msr-c012 "cd /home/jefferson/universal/projects/alura/python/microservice/; git pull origin master; git apply nami.patch; git status ."
+	date
+
 check-source:
 	clear
 	flake8 best_practices_pep8/main.py best_practices_pep8/queue.py best_practices_pep8/stats.py best_practices_pep8/util.py

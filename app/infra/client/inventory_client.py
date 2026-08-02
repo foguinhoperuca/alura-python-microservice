@@ -12,11 +12,16 @@ class InventoryClient:
         self.client = httpx.AsyncClient(base_url=self.inventory_service_url)
 
     async def deduct(self: Self, items: List[ItemRequest]) -> Dict[str, Any]:
-        payload = {"items": [{'product_id': item.product_id, 'quantity': item.quantity, } for item in items]}
-        response = await self.client.post('/inventory/deduct', json=payload)
-        response.raise_for_status()
+        try:
+            payload = {"items": [{'product_id': item.product_id, 'quantity': item.quantity, } for item in items]}
+            response = await self.client.post('/inventory/deduct', json=payload)
+            response.raise_for_status()
 
-        return {'success': True, 'error': None}
+            return {'success': True, 'error': None}
+        except httpx.HTTPStatusError as e:
+            return {'success': False, 'error': e.response.text}
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
 
 
 def get_inventory_client() -> InventoryClient:

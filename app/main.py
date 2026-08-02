@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 
 from app.checkout.router import router as checkout_router
+from app.client_manager import client_manager_factory
 from app.infra.database import create_tables
 from app.util import Util, DebugBot
 
@@ -14,7 +15,9 @@ from app.util import Util, DebugBot
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await create_tables()
+    await client_manager_factory.startup()
     yield
+    await client_manager_factory.shutdown()
 
 
 app = FastAPI(title='Checkout Commercer', version='0.1.0', lifespan=lifespan)

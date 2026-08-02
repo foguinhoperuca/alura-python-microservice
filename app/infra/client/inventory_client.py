@@ -1,15 +1,14 @@
-import os
 from typing import Any, Dict, List, Self
 
 import httpx
 
 from app.checkout.checkout_request import ItemRequest
+from app.client_manager import client_manager_factory
 
 
 class InventoryClient:
-    def __init__(self: Self) -> None:
-        self.inventory_service_url: str = os.getenv('URL_SERVICE_INVENTORY')
-        self.client = httpx.AsyncClient(base_url=self.inventory_service_url)
+    def __init__(self: Self, client: httpx.AsyncClient) -> None:
+        self.client = client
 
     async def deduct(self: Self, items: List[ItemRequest]) -> Dict[str, Any]:
         try:
@@ -25,4 +24,4 @@ class InventoryClient:
 
 
 def get_inventory_client() -> InventoryClient:
-    return InventoryClient()
+    return InventoryClient(client=client_manager_factory.inventory_client)

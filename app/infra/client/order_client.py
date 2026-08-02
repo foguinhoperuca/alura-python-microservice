@@ -1,15 +1,14 @@
-import os
 from typing import List, Self
 
 import httpx
 
 from app.checkout.checkout_request import ItemRequest, ShippingAddressRequest
+from app.client_manager import client_manager_factory
 
 
 class OrderClient:
-    def __init__(self: Self) -> None:
-        self.order_service_url: str = os.getenv('URL_SERVICE_ORDER')
-        self.client = httpx.AsyncClient(base_url=self.order_service_url)
+    def __init__(self: Self, client: httpx.AsyncClient) -> None:
+        self.client = client
 
     async def create(self: Self, checkout_id: str, customer_email: str, shipping_address: ShippingAddressRequest, items: List[ItemRequest]):
         try:
@@ -35,4 +34,4 @@ class OrderClient:
 
 
 def get_order_client() -> OrderClient:
-    return OrderClient()
+    return OrderClient(client=client_manager_factory.order_client)

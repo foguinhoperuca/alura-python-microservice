@@ -1,15 +1,14 @@
-import os
 from typing import Any, Dict, Self
 
 import httpx
 
 from app.checkout.checkout_request import PaymentMethodRequest
+from app.client_manager import client_manager_factory
 
 
 class PaymentClient:
-    def __init__(self: Self) -> None:
-        self.payment_service_url: str = os.getenv('URL_SERVICE_PAYMENT')
-        self.client = httpx.AsyncClient(base_url=self.payment_service_url)
+    def __init__(self: Self, client: httpx.AsyncClient) -> None:
+        self.client = client
 
     async def process(self: Self, total_amount: float, payment_method: PaymentMethodRequest, customer_email: str) -> Dict[str, Any]:
         try:
@@ -35,4 +34,4 @@ class PaymentClient:
 
 
 def get_payment_client() -> PaymentClient:
-    return PaymentClient()
+    return PaymentClient(client=client_manager_factory.payment_client)

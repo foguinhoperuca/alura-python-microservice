@@ -58,4 +58,4 @@ class ClientManager:
             await self._order_client.aclose()
 
 
-client_manager: ClientManager = ClientManager()
+client_manager_factory: ClientManager = ClientManager()
